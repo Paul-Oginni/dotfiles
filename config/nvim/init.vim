@@ -1,6 +1,6 @@
 set runtimepath^=~/.vim runtimepath+=~/.vim/after
 let &packpath = &runtimepath
-source ~/.vimrc
+source ~/config/vim/.vimrc
 
 call plug#begin()
 Plug 'editorconfig/editorconfig-vim'

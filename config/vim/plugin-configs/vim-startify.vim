@@ -24,7 +24,7 @@ let g:startify_custom_header = [
 " The number of files to list.
 let g:startify_show_files_number = 10
 " A list of files to bookmark. Always shown
-let g:startify_bookmarks = [ '~/.vimrc' ]
+let g:startify_bookmarks = [ '~/config/vim/.vimrc' ]
 " Replace startify buffer when opening file from vimfiler
 autocmd User Startified setlocal buftype=
 
