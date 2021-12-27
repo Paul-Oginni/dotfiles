@@ -1,0 +1,335 @@
+#!/bin/zsh
+# vim: set foldmarker=<<,>> foldlevel=0 foldmethod=marker:
+#
+
+# Source the prompt <<1
+#-------------------------------------------------------------------------------
+if [[ ! -n "$ZSHRUN" ]]; then
+    source $HOME/.zsh_prompt
+fi
+# Precmd functions local array variable <<2
+#-------------------------------------------------------------------------------
+local -a precmd_functions
+# >>2
+# Precmd functions <<2
+#------------------------------------------------------------------------------
+# Run precmd functions so we get our pimped out prompt
+#------------------------------------------------------------------------------
+precmd_functions=( precmd_prompt )
+# >>2
+# >>1
+
+# General Settings <<1
+# Autoload tab completion <<2
+#-------------------------------------------------------------------------------
+autoload -U compinit
+compinit -C
+# >> 2
+# Modify default zsh directory coloring on ls commands <<2
+#-------------------------------------------------------------------------------
+export LSCOLORS=gxfxcxdxbxegedabagacad
+# >>2
+# Completion settings <<2
+#-------------------------------------------------------------------------------
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+zstyle ':completion:*' list-colors "$LS_COLORS"
+zstyle -e ':completion:*:(ssh|scp|sshfs|ping|telnet|nc|rsync):*' hosts '
+    reply=( ${=${${(M)${(f)"$(<~/.ssh/config)"}:#Host*}#Host }:#*\**} )'
+# >>2
+# Set the desired setup options man zshoptions <<2
+#-------------------------------------------------------------------------------
+# If command can't be executed, and command is name of a directory, cd to directory
+setopt  auto_cd
+# Make cd push the old directory onto the directory stack.
+setopt  auto_pushd
+# Safety for overwriting files use >| instead of > to over write files
+setopt  noclobber
+# Prevents aliases on the command line from being internally substituted before
+# completion is attempted. The effect is to make the alias a distinct command
+# for completion purposes.
+setopt  complete_aliases
+# Treat the #, ~ and ^ characters as part of patterns for filename
+# generation, etc.  (An initial unquoted `~' always produces named directory
+# expansion.)
+setopt  extended_glob
+# If a new command line being added to the history list duplicates an older one,
+# the older command is removed from the list (even if it is not the previous event).
+setopt  hist_ignore_all_dups
+#  Remove command lines from the history list when the first character on the line
+#  is a space, or when one of the expanded aliases contains a leading space.
+setopt  hist_ignore_space
+# This  option  both  imports new commands from the history file, and also
+# causes your typed commands to be appended to the history file
+setopt  share_history
+setopt  noflowcontrol
+# When listing files that are possible completions, show the type of each file
+# with a trailing identifying mark.
+setopt  list_types
+# Append a trailing / to all directory names resulting from filename
+# generation (globbing).
+setopt  mark_dirs
+# Perform a path search even on command names with slashes in them.
+# Thus if /usr/local/bin is in the user's path, and he or she types
+# X11/xinit, the  command /usr/local/bin/X11/xinit will be executed
+# (assuming it exists).
+setopt  path_dirs
+# If set, `%' is treated specially in prompt expansion.
+setopt  prompt_percent
+# If set, parameter expansion, command substitution and arithmetic
+# expansion are performed in prompts.
+# Substitutions within prompts do not affect the command status.
+setopt  prompt_subst
+# >>2
+# History settings <<2
+#-------------------------------------------------------------------------------
+HISTFILE=$HOME/.zsh_history
+HISTFILESIZE=65536  # search this with `grep | sort -u`
+HISTSIZE=4096
+SAVEHIST=4096
+REPORTTIME=60       # Report time statistics for progs that take more than a minute to run
+# >>2
+# utf-8 in the terminal, will break stuff if your term isn't utf aware <<2
+#-------------------------------------------------------------------------------
+export LANG=en_US.UTF-8
+export LC_ALL=$LANG
+export LC_COLLATE=C
+# >>2
+# Set grepoptions <<2
+#-------------------------------------------------------------------------------
+export GREP_OPTIONS='--color=auto'
+# >>2
+# Use the correct ctags <<2
+#-------------------------------------------------------------------------------
+# PATH="~/.pyenv/shims:/usr/local/bin:$PATH"
+# >>2
+# Editor and display configurations <<2
+#-------------------------------------------------------------------------------
+export EDITOR='vim'
+export VISUAL='vim'
+export GIT_EDITOR=$EDITOR
+export LESS='-imJMWR'
+export PAGER="less $LESS"
+export MANPAGER=$PAGER
+export GIT_PAGER=$PAGER
+export BROWSER='chromium-browser'
+# >>2
+#
+# Eliminate lag between transition from normal/insert mode <<2
+#-------------------------------------------------------------------------------
+# If this causes issue with other shell commands it can be raised default is 4
+export KEYTIMEOUT=1
+# >>2
+# >>1
+
+# Key Bindings <<1
+#-------------------------------------------------------------------------------
+# Set vi-mode and create a few additional Vim-like mappings
+#-------------------------------------------------------------------------------
+bindkey -v
+bindkey '^R' history-incremental-search-backward
+bindkey '^R' history-incremental-pattern-search-backward
+bindkey '^?' backward-delete-char
+bindkey '^H' backward-delete-char
+# >>1
+
+# Aliases <<1
+#-------------------------------------------------------------------------------
+if [ "$(uname)" = "Darwin" ]; then
+    alias ls='ls -FHG'
+else
+    alias ls='ls -F --color'
+fi
+# >>1
+
+# Source Syntaxhighlighting <<1
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# >>1
+
+
+# Source Default Configurations <<1
+for fname in $(find ~/dotfiles/default-configs -name "*.sh*"); do
+    source $fname
+done
+# >>1
+
+# Source Custom Configurations <<1
+for fname in $(find ~/dotfiles/custom-configs -name "*.sh*"); do
+    source $fname
+done
+# >>1
+
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
+
+# Path to your oh-my-zsh installation.
+
+export ZSH="/Users/poginni/.oh-my-zsh"
+
+# Set name of the theme to load --- if set to "random", it will
+# load a random theme each time oh-my-zsh is loaded, in which case,
+# to know which specific one was loaded, run: echo $RANDOM_THEME
+# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
+ZSH_THEME="rixius"
+# ZSH_THEME="robbyrussell"
+# ZSH_THEME="bureau"
+
+# Set list of themes to pick from when loading at random
+# Setting this variable when ZSH_THEME=random will cause zsh to load
+# a theme from this variable instead of looking in ~/.oh-my-zsh/themes/
+# If set to an empty array, this variable will have no effect.
+# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+
+# Uncomment the following line to use case-sensitive completion.
+# CASE_SENSITIVE="true"
+
+# Uncomment the following line to use hyphen-insensitive completion.
+# Case-sensitive completion must be off. _ and - will be interchangeable.
+# HYPHEN_INSENSITIVE="true"
+
+# Uncomment the following line to disable bi-weekly auto-update checks.
+# DISABLE_AUTO_UPDATE="true"
+
+# Uncomment the following line to change how often to auto-update (in days).
+# export UPDATE_ZSH_DAYS=13
+
+# Uncomment the following line to disable colors in ls.
+# DISABLE_LS_COLORS="true"
+
+# Uncomment the following line to disable auto-setting terminal title.
+# DISABLE_AUTO_TITLE="true"
+
+# Uncomment the following line to enable command auto-correction.
+# ENABLE_CORRECTION="true"
+
+# Uncomment the following line to display red dots whilst waiting for completion.
+# COMPLETION_WAITING_DOTS="true"
+
+# Uncomment the following line if you want to disable marking untracked files
+# under VCS as dirty. This makes repository status check for large repositories
+# much, much faster.
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# You can set one of the optional three formats:
+# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# or set a custom format using the strftime function format specifications,
+# see 'man strftime' for details.
+# HIST_STAMPS="mm/dd/yyyy"
+
+# Would you like to use another custom folder than $ZSH/custom?
+# ZSH_CUSTOM=/path/to/new-custom-folder
+
+# Which plugins would you like to load?
+# Standard plugins can be found in ~/.oh-my-zsh/plugins/*
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(
+  git, vscode, compleat
+)
+source $ZSH/oh-my-zsh.sh
+# User configuration
+
+# export MANPATH="/usr/local/man:$MANPATH"
+
+# You may need to manually set your language environment
+# export LANG=en_US.UTF-8
+
+# Preferred editor for local and remote sessions
+# if [[ -n $SSH_CONNECTION ]]; then
+#   export EDITOR='vim'
+# else
+#   export EDITOR='mvim'
+# fi
+
+# Compilation flags
+# export ARCHFLAGS="-arch x86_64"
+
+# ssh
+# export SSH_KEY_PATH="~/.ssh/rsa_id"
+
+# Set personal aliases, overriding those provided by oh-my-zsh libs,
+# plugins, and themes. Aliases can be placed here, though oh-my-zsh
+# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# For a full list of active aliases, run `alias`.
+#
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+
+ssh-add
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /usr/local/bin/vault vault
+
+export NVM_DIR='$HOME/.nvm'
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# Terraform
+
+alias ta="terraform apply"
+alias td="terraform destroy"
+alias ti="terraform init"
+alias tp="terraform plan"
+
+# iTerm shell integration
+#source ~/.iterm2_shell_integration.bash
+
+ag='ag --color --ignore-dir node_modules --ignore-dir .terraform'
+
+# Docker
+alias dp='docker prune -a'
+alias dc='docker system prune -a && docker volume prune'
+alias dr='docker run -it ${1} /bin/bash'
+alias de='docker exec -it ${1} /bin/bash'
+
+# Nvim
+alias n='nvim'
+
+# Python
+alias p='python'
+alias pp='python -mjson.tool'
+
+# Tmux
+alias t='tmux new -s ${1}' # New named session
+alias t del='tmux kill-session -t ${1}' # Kill named session
+alias tk='tmux kill-session -t ${1}'
+
+# FZF
+alias f='nvim $(fzf)'
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+alias "git push"='echo test'
+
+
+# Vi mode
+# bindkey -v
+# export KEYTIMEOUT=1
+# alias hist='history | FZF'
+
+# Jungle 
+alias jl='jungle'
+
+# Git
+alias gl='git log | head -n 5 | grep commit | awk "{print substr(\$2, 0, 8) }" | pbcopy'
+alias gcm='git checkout master'
+alias gpom='git pull origin master'
+alias gll='git log'
+alias gc='git checkout'
+alias gfa='git fetch --all'
+alias gc='git checkout'
+
+# Disable zsh reverse search in favor of FZF's
+bindkey -r "^s"; bindkey -r "^t"
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Doctoc
+alias doc='doctoc'
+
+# Tmux
+#
+alias ta='tmux attach-session -t NOTES'
+alias td='tmux kill-sesssion -t'
