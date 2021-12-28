@@ -1,12 +1,8 @@
-#==============
-# Install packages
-#==============
-
 # Update /usr/local path ownership to current user
 sudo chown -R $(whoami):admin /usr/local
 
 # Install Homebrew
-ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 brew doctor
 brew update
 
@@ -17,18 +13,18 @@ source ~/.bashrc
 #==============
 # Backup old dotflies
 #==============
-mkdir dotfiles_backup
-sudo mv ~/.vim dotfile_backup > /dev/null 2>&1
-sudo mv ~/.vimrc dotfile_backup > /dev/null 2>&1
-sudo mv ~/.bashrc dotfile_backup > /dev/null 2>&1
-sudo mv ~/.tmux dotfile_backup > /dev/null 2>&1
-sudo mv ~/.tmux.conf dotfile_backup > /dev/null 2>&1
-sudo mv ~/.zshrc_prompt dotfile_backup > /dev/null 2>&1
-sudo mv ~/.zshrc dotfile_backup > /dev/null 2>&1
-sudo mv ~/.gitconfig dotfile_backup > /dev/null 2>&1
-sudo mv ~/.psqlrc dotfile_backup > /dev/null 2>&1
-sudo mv ~/.config dotfile_backup > /dev/null 2>&1
-sudo mv ~/Brewfile dotfile_backup > /dev/null 2>&1
+mkdir ~/dotfiles_backup
+sudo cp -r ~/.vim ~/dotfiles_backup > /dev/null 2>&1
+sudo cp ~/.vimrc ~/dotfiles_backup > /dev/null 2>&1
+sudo cp ~/.bashrc ~/dotfiles_backup > /dev/null 2>&1
+sudo cp ~/.tmux ~/dotfiles_backup > /dev/null 2>&1
+sudo cp ~/.tmux.conf ~/dotfiles_backup > /dev/null 2>&1
+sudo cp ~/.zshrc_prompt ~/dotfiles_backup > /dev/null 2>&1
+sudo cp ~/.zshrc ~/dotfiles_backup > /dev/null 2>&1
+sudo cp ~/.gitconfig ~/dotfiles_backup > /dev/null 2>&1
+sudo cp ~/.psqlrc ~/dotfiles_backup > /dev/null 2>&1
+sudo cp -r ~/.config ~/dotfiles_backup > /dev/null 2>&1
+sudo cp ~/Brewfile ~/dotfiles_backup > /dev/null 2>&1
 
 #==============
 # Remove old dot flies
@@ -56,11 +52,11 @@ ln -sf ~/dotfiles/config/vim/vimrc ~/.vimrc
 SYMLINKS+=('.vimrc')
 ln -sf ~/dotfiles/config/bash/bashrc ~/.bashrc
 SYMLINKS+=('.bashrc')
-ln -sf ~/dotfiles/mac-tmux ~/config/tmux/.tmux
+ln -sf ~/dotfiles/config/tmux ~/.tmux
 SYMLINKS+=('.tmux')
 ln -sf ~/dotfiles/config/zsh/zsh_prompt ~/.zsh_prompt
 SYMLINKS+=('.zsh_prompt')
-ln -sf ~/dotfiles/zsh/zshrc ~/.zshrc
+ln -sf ~/dotfiles/config/zsh/zshrc ~/.zshrc
 SYMLINKS+=('.zshrc')
 ln -sf ~/dotfiles/config ~/.config
 SYMLINKS+=('.config')
@@ -68,9 +64,9 @@ ln -sf ~/dotfiles/custom-configs/custom-snips ~/.vim/custom-snips
 SYMLINKS+=('.vim/custom-snips')
 ln -sf ~/dotfiles/config/homebrew/Brewfile ~/Brewfile
 SYMLINKS+=('Brewfile')
-ln -s ~/dotfiles/gitconfig ~/.gitconfig
+ln -s ~/dotfiles/config/git/gitconfig ~/.gitconfig
 SYMLINKS+=('.gitconfig')
-ln -s ~/dotfiles/mac-tmux/tmux.conf ~/config/tmux/.tmux.conf
+ln -s ~/dotfiles/config/tmux/tmux.conf ~/.tmux.conf
 SYMLINKS+=('.tmux.conf')
 
 echo "The following symlinks have been created:\n ${SYMLINKS[@]}"

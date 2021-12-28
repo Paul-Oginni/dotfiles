@@ -330,6 +330,7 @@ bindkey -r "^s"; bindkey -r "^t"
 alias doc='doctoc'
 
 # Tmux
-#
 alias ta='tmux attach-session -t NOTES'
 alias td='tmux kill-sesssion -t'
+
+alias sz="source ~/.zshrc"
