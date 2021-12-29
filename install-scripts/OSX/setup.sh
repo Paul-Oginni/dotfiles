@@ -6,14 +6,10 @@ sudo chown -R $(whoami):admin /usr/local
 brew doctor
 brew update
 
-# Ensure we use all of the packages we are about to install
-echo "export PATH='/usr/local/bin:$PATH'\n" >> ~/.bashrc
-source ~/.bashrc
-
 #==============
 # Backup old dotflies
 #==============
-mkdir ~/dotfiles_backup
+mkdir ~/dotfiles_backup_$(date +"%Y%m%d%H%M%S")
 sudo cp -r ~/.vim ~/dotfiles_backup > /dev/null 2>&1
 sudo cp ~/.vimrc ~/dotfiles_backup > /dev/null 2>&1
 sudo cp ~/.bashrc ~/dotfiles_backup > /dev/null 2>&1
@@ -70,6 +66,10 @@ ln -s ~/dotfiles/config/tmux/tmux.conf ~/.tmux.conf
 SYMLINKS+=('.tmux.conf')
 
 echo "The following symlinks have been created:\n ${SYMLINKS[@]}"
+
+# Ensure we use all of the packages we are about to install
+echo "export PATH='/usr/local/bin:$PATH'\n" >> ~/.bashrc
+source ~/.bashrc
 
 cd ~
 brew bundle

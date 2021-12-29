@@ -1,4 +1,5 @@
 #!/bin/zsh
+#
 # vim: set foldmarker=<<,>> foldlevel=0 foldmethod=marker:
 #
 
@@ -294,7 +295,7 @@ alias pp='python -mjson.tool'
 
 # Tmux
 alias t='tmux new -s ${1}' # New named session
-alias t del='tmux kill-session -t ${1}' # Kill named session
+alias td='tmux kill-session -t ${1}' # Kill named session
 alias tk='tmux kill-session -t ${1}'
 
 # FZF
