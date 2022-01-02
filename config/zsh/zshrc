@@ -293,11 +293,6 @@ alias n='nvim'
 alias p='python'
 alias pp='python -mjson.tool'
 
-# Tmux
-alias t='tmux new -s ${1}' # New named session
-alias td='tmux kill-session -t ${1}' # Kill named session
-alias tk='tmux kill-session -t ${1}'
-
 # FZF
 alias f='nvim $(fzf)'
 
@@ -331,7 +326,10 @@ bindkey -r "^s"; bindkey -r "^t"
 alias doc='doctoc'
 
 # Tmux
+alias t="tmux new-session -t ${1}"
 alias ta='tmux attach-session -t NOTES'
-alias td='tmux kill-sesssion -t'
+alias td='tmux detach'
+alias tk='tmux kill-session -t ${1}'
 
 alias sz="source ~/.zshrc"
+alias python=/usr/local/bin/python3.10

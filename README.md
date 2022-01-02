@@ -13,3 +13,10 @@ bash Linux/create-symlinks.sh
 
 ## Refernce
 Shout out to mattjmorrison, after whose dotfiles I modeled this repo.
+
+## Fixing 
+
+- Run `python3 -m pip install --user --upgrade pynvim`
+
+# TODO:
+- add editorconfig file

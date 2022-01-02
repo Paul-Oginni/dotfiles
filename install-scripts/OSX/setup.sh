@@ -64,6 +64,8 @@ ln -s ~/dotfiles/config/git/gitconfig ~/.gitconfig
 SYMLINKS+=('.gitconfig')
 ln -s ~/dotfiles/config/tmux/tmux.conf ~/.tmux.conf
 SYMLINKS+=('.tmux.conf')
+ln -s ~/dotfiles/config/editorconfig/editorconfig ~/.editorconfig
+SYMLINKS+=('.editorconfig')
 
 echo "The following symlinks have been created:\n ${SYMLINKS[@]}"
 
