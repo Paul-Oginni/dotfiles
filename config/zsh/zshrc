@@ -327,7 +327,7 @@ alias doc='doctoc'
 
 # Tmux
 alias t="tmux new-session -t ${1}"
-alias ta='tmux attach-session -t NOTES'
+alias ta='tmux attach-session -t notes'
 alias td='tmux detach'
 alias tk='tmux kill-session -t ${1}'
 
