@@ -18,3 +18,9 @@ cask "karabiner-elements"
 # languages
 brew "node"
 brew "go"
+
+# other applications
+cask "google-chrome"
+cask "sizeup"
+tap "kidonng/malt" # Mostly used for vimac
+

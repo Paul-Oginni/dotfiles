@@ -1,2 +1,3 @@
-
 YCM
+
+python ~/dotfiles/config/vim/plugged/YouCompleteMe/install.py --clang-completer

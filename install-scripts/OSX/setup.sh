@@ -83,7 +83,7 @@ cd -
 chsh -s /bin/zsh
 
 #==============
-# Setup nvim plugin installer
+# Setup vimplug as plugin installer
 #==============
 mkdir -p ~/.local
 
